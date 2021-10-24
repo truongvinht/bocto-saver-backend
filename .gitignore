@@ -102,3 +102,16 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignore package
+package-lock.json
+
+# ignore mac related content
+.DS_Store
+
+# ignore visual studio code settings
+.vscode
+
+# generated files
+docs
+out
