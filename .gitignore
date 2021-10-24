@@ -115,3 +115,6 @@ package-lock.json
 # generated files
 docs
 out
+
+# custom configuration
+.config.json

@@ -18,6 +18,8 @@ const logger = LogHelper.getInstance();
 
 const ApiResponse = require('./apiResponse');
 
+const location = require('./location.routes');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -52,6 +54,9 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+
+// LOCATION
+app.use('/api', location);
 
 // export API
 module.exports = app;
