@@ -13,6 +13,3 @@ npm run start
 
 # Unit-Testing
 npm run test
-
-# License
-BSD-2-Clause
