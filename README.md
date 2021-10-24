@@ -1,3 +1,7 @@
+![Node.js CI](https://github.com/truongvinht/bocto-saver-backend/workflows/Node.js%20CI/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/truongvinht/bocto-saver-backend/badge.svg?branch=main)](https://coveralls.io/github/truongvinht/bocto-saver-backend?branch=main)
+[![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)]
+
 # bocto-saver-backend
 Server application for Shopping to save money (Buy-in-October-saver)
 
