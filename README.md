@@ -13,3 +13,6 @@ npm run start
 
 # Unit-Testing
 npm run test
+
+## Test single file
+npm test -- NAME

@@ -8,8 +8,8 @@ const Location = db.locations;
 // Create and Save a new Location
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.street) {
-    res.status(400).send({ message: "Content can not be empty!" });
+  if (!req.body.city) {
+    res.status(400).send({ message: "City can not be empty!" });
     return;
   }
 

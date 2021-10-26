@@ -11,6 +11,7 @@
     "test:coverage": "jest --coverage",
     "test:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test:staged": "jest --findRelatedTests",
+    "test:detect": "jest --detectOpenHandles",
     "docs": "apidoc -v -i api/ -o docs/"
   },
   "jest": {

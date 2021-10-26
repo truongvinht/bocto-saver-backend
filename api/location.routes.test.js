@@ -4,26 +4,125 @@
 
 const app = require('./index');
 const supertest = require('supertest');
-const config = require('../config/configuration');
+const CONFIG = require('../config/configuration');
+const DatabaseManager = require('./../services/databaseManager');
 
 // api Endpoint
 const LOCATIONS_ENDPOINT = `/api/locations`;
 
-const hook = (method = 'get') => (args) =>
-  supertest(app)
-    [method](args)
-    .set('authorization', config.appToken);
+describe('GET '+LOCATIONS_ENDPOINT, () => {
 
-const request = {
-  get: hook('get')
-};
+  afterEach(() => {
 
-it('request all location', async done => {
-    const response = await request.get(LOCATIONS_ENDPOINT);
-    expect(response.status).toBe(200);
-    const resultList = response.body;
+    DatabaseManager.getInstance().disconnect();
+  });
 
-    // result should not be empty
-    expect(resultList.length).toBeGreaterThan(0);
-    done();
+  // token not being sent - should respond with a 403
+  it('It should require authorization', () => {
+    return supertest(app)
+      .get(LOCATIONS_ENDPOINT)
+      .then((response) => {
+        expect(response.statusCode).toBe(403);
+      });
+  });
+
+  it('request all location', async () => {
+    const resp = await supertest(app).get(LOCATIONS_ENDPOINT)
+      .set('authorization', CONFIG.appToken)
+      .set('Content-type', 'application/json');
+    //expect(resp.body).not.toBeNull();
+    // return await supertest(app)
+    //   .get(LOCATIONS_ENDPOINT)
+    //   .set('authorization', CONFIG.appToken)
+    //   .then((response) => {
+    //     expect(response.statusCode).toBe(200);
+    //   });
+  });
+
+  // it('create a new location', async () => {
+  //   const location = 
+  //   {
+  //     street: 'test',
+  //     zip: '10000',
+  //     city: 'Berlin',
+  //     country: 'Germany'
+  //   };
+
+  //   const resp = await supertest(app)
+  //     .post(LOCATIONS_ENDPOINT)
+  //     .set('authorization', CONFIG.appToken)
+  //     .set('Content-type', 'application/json')
+  //     .send({ location });
+  //     expect(resp.body).not.toBeNull();
+  // },8000);
+
+  // it('delete an existing location', async () => {
+  //   const location = 
+  //   {
+  //     street: 'test',
+  //     zip: '10000',
+  //     city: 'Berlin',
+  //     country: 'Germany'
+  //   };
+
+  //   const resp = await supertest(app)
+  //     .delete(LOCATIONS_ENDPOINT)
+  //     .set('authorization', CONFIG.appToken)
+  //     .set('Content-type', 'application/json')
+  //     .send({ location });
+  //     expect(resp.body).not.toBeNull();
+  // },10000);
+
 });
+
+// const hook_get = (method = 'get') => (args) =>
+//   supertest(app)
+//     [method](args)
+//     .set('authorization', CONFIG.appToken);
+
+// const hook_post = (method = 'post') => (args) =>
+//   supertest(app)
+//     [method](args)
+//     .set('authorization', CONFIG.appToken);
+
+// const request = {
+//   get: hook_get('get'),
+//   post: hook_post('post')
+// };
+
+// beforeEach(() => {
+//   DatabaseManager.getInstance().connect();
+// });
+
+// afterEach(() => {
+//   DatabaseManager.getInstance().disconnect();
+// });
+
+// it('request all location', async done => {
+//     const response = await request.get(LOCATIONS_ENDPOINT);
+//     expect(response.status).toBe(200);
+//     const resultList = response.body;
+//     // result should not be empty
+//     expect(resultList).not.toBeNull();
+//     console.log('finished request');
+//     done();
+// },10000);
+
+// it('create a new location', async done => {
+//   const response = await request.post(LOCATIONS_ENDPOINT);
+
+//   const body = 
+//   {
+//   street: 'test',
+//   zip: '10000',
+//   city: 'Berlin',
+//   country: 'Germany'
+//   };
+
+
+//   expect(response.status).toBe(200);
+//   done();
+// },10000);
+
+it.todo('request location by city');
+it.todo('update an existing location');
