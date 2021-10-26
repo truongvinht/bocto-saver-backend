@@ -1,3 +1,7 @@
+// location.controller.js
+// Location controller for handling operations
+// ==================
+
 const db = require("../models");
 const Location = db.locations;
 
@@ -15,7 +19,6 @@ exports.create = (req, res) => {
     zip: req.body.zip,
     city: req.body.city,
     country: req.body.country
-
   });
 
   // Save Location in the database
@@ -34,8 +37,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Location from the database.
 exports.findAll = (req, res) => {
-  const street = req.query.street;
-  var condition = street ? { street: { $regex: new RegExp(street), $options: "i" } } : {};
+  const city = req.query.city;
+  var condition = city ? { city: { $regex: new RegExp(city), $options: "i" } } : {};
 
   Location.find(condition)
     .then(data => {
@@ -129,3 +132,7 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
+
+exports.drop = (req, res) => {
+    
+}

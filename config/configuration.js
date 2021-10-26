@@ -55,13 +55,13 @@ if(Object.prototype.hasOwnProperty.call(localSettings, 'dbPwd')) {
     dbPwd = process.env.DBPWD;
 }
 
+// Database connection
+const dbConnection = `mongodb+srv://${dbUser}:${dbPwd}@${dbUrl}`;
 
 module.exports = {
     appPort,
     appToken,
     appEnv,
     dbCluster,
-    dbUrl,
-    dbUser,
-    dbPwd
+    dbConnection
 };

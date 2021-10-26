@@ -11,8 +11,6 @@ const CONFIG = require('../config/configuration');
 const LogHelper = require('../loaders/loghelper');
 const logger = LogHelper.getInstance();
 
-const DB_CONNECTION = `mongodb+srv://${CONFIG.dbUser}:${CONFIG.dbPwd}@${CONFIG.dbUrl}`;
-
 class DatabaseManager {
 
     // access singleton instance
@@ -41,7 +39,7 @@ class DatabaseManager {
     }
 
     url() {
-        return DB_CONNECTION;
+        return CONFIG.dbConnection;
     }
 };
 
