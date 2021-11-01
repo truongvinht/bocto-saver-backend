@@ -22,17 +22,7 @@ class DatabaseManager {
     }
 
     connect() {
-        db.mongoose.connect(db.url, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-        })
-        .then(() => {
-            logger.info(`Connected to the database! ${db.url}`);
-        })
-        .catch(err => {
-            logger.error("Cannot connect to the database!", err);
-            process.exit();
-        });
+        this.connect(undefined);
     }
     connect(database) {
         let dbUrl = undefined;

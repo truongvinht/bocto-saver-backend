@@ -24,37 +24,37 @@ describe('GET '+LOCATIONS_ENDPOINT, () => {
   //   expect(response.statusCode).toBe(403);
   // });
 
-  it('request all location', () => {
+  it('request all location',() => {
     request(app)
       .get(LOCATIONS_ENDPOINT)
       .set('Authorization', CONFIG.appToken)
-      // .set('Content-type', 'application/json')
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        } else {
-          expect(res.body).not.toBeNull();
-        }
-      });
+      .set('Content-type', 'application/json');
+      // .end((err, res) => {
+      //   if (err) {
+      //     return done(err);
+      //   } else {
+      //     expect(res.body).not.toBeNull();
+      //   }
+      // });
     
   });
 
-  // it('create a new location', async () => {
-  //   const location = 
-  //   {
-  //     street: 'test',
-  //     zip: '10000',
-  //     city: 'Berlin',
-  //     country: 'Germany'
-  //   };
+  it('create a new location', async () => {
+    const location = 
+    {
+      street: 'test',
+      zip: '10000',
+      city: 'Berlin',
+      country: 'Germany'
+    };
 
-  //   const resp = await supertest(app)
-  //     .post(LOCATIONS_ENDPOINT)
-  //     .set('authorization', CONFIG.appToken)
-  //     .set('Content-type', 'application/json')
-  //     .send({ location });
-  //     expect(resp.body).not.toBeNull();
-  // },8000);
+    const resp = await request(app)
+      .post(LOCATIONS_ENDPOINT)
+      .set('authorization', CONFIG.appToken)
+      .set('Content-type', 'application/json')
+      .send({ location });
+      expect(resp.body).not.toBeNull();
+  },8000);
 
   // it('delete an existing location', async () => {
   //   const location = 
