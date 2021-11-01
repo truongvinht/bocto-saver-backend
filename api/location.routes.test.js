@@ -18,11 +18,11 @@ describe('GET '+LOCATIONS_ENDPOINT, () => {
   });
 
   // token not being sent - should respond with a 403
-  // it('It should require authorization', async () => {
-  //   const response = await request(app)
-  //     .get(LOCATIONS_ENDPOINT);
-  //   expect(response.statusCode).toBe(403);
-  // });
+  it('authorization required', async () => {
+    const response = await request(app)
+      .get(LOCATIONS_ENDPOINT);
+    expect(response.statusCode).toBe(403);
+  });
 
   it('request all location',() => {
     request(app)
