@@ -3,7 +3,7 @@
 // ================
 
 const app = require('./index');
-const supertest = require('supertest');
+const request = require('supertest');
 const CONFIG = require('../config/configuration');
 const DatabaseManager = require('./../services/databaseManager');
 
@@ -12,31 +12,31 @@ const LOCATIONS_ENDPOINT = `/api/locations`;
 
 describe('GET '+LOCATIONS_ENDPOINT, () => {
 
-  afterEach(() => {
 
-    DatabaseManager.getInstance().disconnect();
+  afterAll(async () => {
+    await DatabaseManager.getInstance().disconnect();
   });
 
   // token not being sent - should respond with a 403
-  it('It should require authorization', () => {
-    return supertest(app)
-      .get(LOCATIONS_ENDPOINT)
-      .then((response) => {
-        expect(response.statusCode).toBe(403);
-      });
-  });
+  // it('It should require authorization', async () => {
+  //   const response = await request(app)
+  //     .get(LOCATIONS_ENDPOINT);
+  //   expect(response.statusCode).toBe(403);
+  // });
 
-  it('request all location', async () => {
-    const resp = await supertest(app).get(LOCATIONS_ENDPOINT)
-      .set('authorization', CONFIG.appToken)
-      .set('Content-type', 'application/json');
-    //expect(resp.body).not.toBeNull();
-    // return await supertest(app)
-    //   .get(LOCATIONS_ENDPOINT)
-    //   .set('authorization', CONFIG.appToken)
-    //   .then((response) => {
-    //     expect(response.statusCode).toBe(200);
-    //   });
+  it('request all location', () => {
+    request(app)
+      .get(LOCATIONS_ENDPOINT)
+      .set('Authorization', CONFIG.appToken)
+      // .set('Content-type', 'application/json')
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        } else {
+          expect(res.body).not.toBeNull();
+        }
+      });
+    
   });
 
   // it('create a new location', async () => {

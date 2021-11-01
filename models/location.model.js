@@ -7,7 +7,7 @@ module.exports = mongoose => {
       {
         street: String,
         zip: String,
-        city: String,
+        city: {type: String, required: true},
         country: String
       },
       { timestamps: true }
@@ -19,7 +19,6 @@ module.exports = mongoose => {
       return object;
     });
   
-    const Location = mongoose.model("location", schema);
-    return Location;
+    return mongoose.model("location", schema);
   };
   

@@ -27,15 +27,36 @@ class DatabaseManager {
                 useUnifiedTopology: true
         })
         .then(() => {
-            console.log("Connected to the database!");
+            logger.info(`Connected to the database! ${db.url}`);
         })
         .catch(err => {
-            console.log("Cannot connect to the database!", err);
+            logger.error("Cannot connect to the database!", err);
             process.exit();
         });
     }
-    disconnect() {
+    connect(database) {
+        let dbUrl = undefined;
+        if (database == undefined || database == null) {
+            dbUrl = db.url;
+        } else {
+            dbUrl = db.url + '/' + database;
+        }
+        db.mongoose.connect(dbUrl, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+        .then(() => {
+            logger.info(`Connected to the database! ${dbUrl}`);
+        })
+        .catch(err => {
+            logger.error("Cannot connect to the database!", err);
+            process.exit();
+        });
+    }
 
+    disconnect() {
+        logger.info(`Disconnect database!`);
+        db.mongoose.disconnect();
     }
 
     url() {

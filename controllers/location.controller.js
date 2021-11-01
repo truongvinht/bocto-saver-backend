@@ -5,8 +5,12 @@
 const db = require("../models");
 const Location = db.locations;
 
+const LogHelper = require('./../loaders/loghelper');
+const logger = LogHelper.getInstance();
+
 // Create and Save a new Location
 exports.create = (req, res) => {
+  logger.info('Location#create');
   // Validate request
   if (!req.body.city) {
     res.status(400).send({ message: "City can not be empty!" });
@@ -37,6 +41,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Location from the database.
 exports.findAll = (req, res) => {
+  logger.info('Location#findAll');
   const city = req.query.city;
   var condition = city ? { city: { $regex: new RegExp(city), $options: "i" } } : {};
 
@@ -54,6 +59,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Location with an id
 exports.findOne = (req, res) => {
+  logger.info('Location#findOne');
   const id = req.params.id;
 
   Location.findById(id)
@@ -71,6 +77,7 @@ exports.findOne = (req, res) => {
 
 // Update a Location by the id in the request
 exports.update = (req, res) => {
+  logger.info('Location#update');
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -96,6 +103,7 @@ exports.update = (req, res) => {
 
 // Delete a Location with the specified id in the request
 exports.delete = (req, res) => {
+  logger.info('Location#delete');
   const id = req.params.id;
 
   Location.findByIdAndRemove(id, { useFindAndModify: false })
@@ -119,6 +127,7 @@ exports.delete = (req, res) => {
 
 // Delete all Locations from the database.
 exports.deleteAll = (req, res) => {
+  logger.info('Location#deleteAll');
     Location.deleteMany({})
     .then(data => {
       res.send({

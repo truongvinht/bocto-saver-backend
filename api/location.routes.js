@@ -4,9 +4,6 @@
 
 // import
 const express = require('express'); // call express
-
-const LogHelper = require('./../loaders/loghelper');
-const logger = LogHelper.getInstance();
 const location = require('./../controllers/location.controller')
 
 // ROUTES FOR OUR API
