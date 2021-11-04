@@ -40,21 +40,19 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Location from the database.
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
   logger.info('Location#findAll');
   const city = req.query.city;
-  var condition = city ? { city: { $regex: new RegExp(city), $options: "i" } } : {};
-
-  Location.find(condition)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
+  const condition = city ? { city: { $regex: new RegExp(city), $options: "i" } } : {};
+  try {  
+    let data = await Location.find(condition);
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving locations."
       });
-    });
+  }
 };
 
 // Find a single Location with an id

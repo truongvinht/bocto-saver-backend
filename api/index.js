@@ -36,7 +36,6 @@ app.use(function (req, res, next) {
         logger.error(`Request: ${response.getMessage()}`);
         return res.status(response.getHttpCode()).json({ error: response.getLongMessage() });
     }
-
     // check for valid credentials
     if (req.headers.authorization !== config.appToken) {
         // 401
@@ -49,7 +48,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Currently only allow read access, 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();

@@ -24,11 +24,14 @@ describe('GET '+LOCATIONS_ENDPOINT, () => {
     expect(response.statusCode).toBe(403);
   });
 
-  it('request all location',() => {
-    request(app)
+  it('request all location',async () => {
+    const resp = await request(app)
       .get(LOCATIONS_ENDPOINT)
-      .set('Authorization', CONFIG.appToken)
-      .set('Content-type', 'application/json');
+      .set('Authorization', CONFIG.appToken).send();
+    
+      // .set('Content-type', 'application/json');
+    
+      expect(resp.statusCode).toBe(200);
       // .end((err, res) => {
       //   if (err) {
       //     return done(err);
@@ -37,7 +40,7 @@ describe('GET '+LOCATIONS_ENDPOINT, () => {
       //   }
       // });
     
-  });
+  },10000);
 
   it('create a new location', async () => {
     const location = 
