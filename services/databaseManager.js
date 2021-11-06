@@ -2,8 +2,6 @@
 // Handle database connection
 // ==================
 
-const db = require("../models");
-
 // connection configuration
 const CONFIG = require('../config/configuration');
 
@@ -12,6 +10,26 @@ const LogHelper = require('../loaders/loghelper');
 const logger = LogHelper.getInstance();
 
 class DatabaseManager {
+    // init database manager
+    constructor () {
+        DatabaseManager.instance = this;
+
+        const mongoose = require("mongoose");
+        mongoose.Promise = global.Promise;
+        this.db = {};
+        this.db.mongoose = mongoose;
+        this.db.url = CONFIG.dbConnection;
+
+        const dbEnv = mongoose.connection.useDb(CONFIG.dbName);
+
+        // load model structure
+        this.db.locations = require("../models/location.model.js")(mongoose,dbEnv);
+    }
+
+    // access location table
+    locations() {
+        return this.db.locations;
+    }
 
     // access singleton instance
     static getInstance() {
@@ -27,11 +45,11 @@ class DatabaseManager {
     connect(database) {
         let dbUrl = undefined;
         if (database == undefined || database == null) {
-            dbUrl = db.url;
+            dbUrl = this.db.url;
         } else {
-            dbUrl = db.url + '/' + database;
+            dbUrl = this.db.url + '/' + database;
         }
-        db.mongoose.connect(dbUrl, {
+        this.db.mongoose.connect(dbUrl, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
@@ -47,7 +65,7 @@ class DatabaseManager {
 
     disconnect() {
         logger.info(`Disconnect database!`);
-        db.mongoose.disconnect();
+        this.db.mongoose.disconnect();
     }
 
     url() {

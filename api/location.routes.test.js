@@ -12,7 +12,6 @@ const LOCATIONS_ENDPOINT = `/api/locations`;
 
 describe('GET '+LOCATIONS_ENDPOINT, () => {
 
-
   afterAll(async () => {
     await DatabaseManager.getInstance().disconnect();
   });
@@ -23,29 +22,28 @@ describe('GET '+LOCATIONS_ENDPOINT, () => {
       .get(LOCATIONS_ENDPOINT);
     expect(response.statusCode).toBe(403);
   });
-
-  it('request all location',async () => {
-    const resp = await request(app)
-      .get(LOCATIONS_ENDPOINT)
-      .set('Authorization', CONFIG.appToken).send();
+  // it('request all location',async () => {
+  //   const resp = await req(app)
+  //     .get(LOCATIONS_ENDPOINT)
+  //     .set('Authorization', CONFIG.appToken).send();
     
-      // .set('Content-type', 'application/json');
+  //     // .set('Content-type', 'application/json');
     
-      expect(resp.statusCode).toBe(200);
-      // .end((err, res) => {
-      //   if (err) {
-      //     return done(err);
-      //   } else {
-      //     expect(res.body).not.toBeNull();
-      //   }
-      // });
+  //     expect(resp.statusCode).toBe(200);
+  //     // .end((err, res) => {
+  //     //   if (err) {
+  //     //     return done(err);
+  //     //   } else {
+  //     //     expect(res.body).not.toBeNull();
+  //     //   }
+  //     // });
     
-  },10000);
+  // },10000);
 
   it('create a new location', async () => {
     const location = 
     {
-      street: 'test',
+      street: 'Test',
       zip: '10000',
       city: 'Berlin',
       country: 'Germany'

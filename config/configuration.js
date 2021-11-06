@@ -11,9 +11,6 @@ const appPort = process.env.PORT || '3000';
 // Token for API access
 const appToken = process.env.TOKEN || 'sample';
 
-// environment variable
-const appEnv = process.env.NODE_ENV || 'local';
-
 // Database CLUSTER
 const dbCluster = process.env.DB_CLUSTER;
 
@@ -26,13 +23,16 @@ const dbUser = process.env.DB_USER;
 // Database User
 const dbPwd = process.env.DB_PWD;
 
+// Database name: default is dev database for testing
+const dbName = process.env.DB_NAME || 'DEV';
+
 // Database connection
 const dbConnection = `mongodb+srv://${dbUser}:${dbPwd}@${dbUrl}`;
 
 module.exports = {
     appPort,
     appToken,
-    appEnv,
     dbCluster,
-    dbConnection
+    dbConnection,
+    dbName
 };

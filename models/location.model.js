@@ -2,7 +2,7 @@
 // Location model object for storing geographical data
 // ==================
 
-module.exports = mongoose => {
+module.exports = (mongoose, connection) => {
     let schema = mongoose.Schema(
       {
         street: String,
@@ -18,8 +18,6 @@ module.exports = mongoose => {
       object.id = _id;
       return object;
     });
-    // const myDB = mongoose.connection.useDb('bocto-saver');
 
-    return mongoose.model("location", schema);
-  };
-  
+    return connection.model("location", schema);
+};

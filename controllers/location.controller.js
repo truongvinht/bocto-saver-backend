@@ -2,41 +2,37 @@
 // Location controller for handling operations
 // ==================
 
-const db = require("../models");
-const Location = db.locations;
+const DatabaseManager = require('../services/databaseManager');
+
+const Location = DatabaseManager.getInstance().locations();
 
 const LogHelper = require('./../loaders/loghelper');
 const logger = LogHelper.getInstance();
 
 // Create and Save a new Location
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   logger.info('Location#create');
   // Validate request
   if (!req.body.city) {
     res.status(400).send({ message: "City can not be empty!" });
     return;
   }
-
-  // Create a Location
-  const location = new Location({
-    street: req.body.street,
-    zip: req.body.zip,
-    city: req.body.city,
-    country: req.body.country
-  });
-
-  // Save Location in the database
-  location
-    .save(location)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
+  try {
+    // Create a Location
+    const location = new Location({
+      street: req.body.street,
+      zip: req.body.zip,
+      city: req.body.city,
+      country: req.body.country
+    });
+    let savedLocation = await location.save(location);
+    res.send(savedLocation);
+  } catch(err) {
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Location."
       });
-    });
+  }
 };
 
 // Retrieve all Location from the database.
