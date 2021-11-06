@@ -42,6 +42,7 @@ class DatabaseManager {
             logger.error("Cannot connect to the database!", err);
             process.exit();
         });
+
     }
 
     disconnect() {

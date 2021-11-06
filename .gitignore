@@ -118,3 +118,4 @@ out
 
 # custom configuration
 .config.json
+.env

@@ -2,6 +2,9 @@
 // handle application variables
 // ==================
 
+// load configuration with DOTENV
+require('dotenv').config()
+
 // Get port from environment and store in Express.
 const appPort = process.env.PORT || '3000';
 
@@ -11,49 +14,17 @@ const appToken = process.env.TOKEN || 'sample';
 // environment variable
 const appEnv = process.env.NODE_ENV || 'local';
 
-// configuration for local testing
-let localSettings = {};
-
-try {
-    localSettings = require('../.config.json');
-} catch (e) {
-    if (e.code !== 'MODULE_NOT_FOUND') {
-        throw e;
-    }
-    console.log('.config.json not found. Using default configuration...');
-}
-
 // Database CLUSTER
-let dbCluster = '';
-if(Object.prototype.hasOwnProperty.call(localSettings, 'dbCluster')) {
-    dbCluster = localSettings.dbCluster;
-} else {
-    dbCluster = process.env.DBCLUSTER;
-}
+const dbCluster = process.env.DB_CLUSTER;
 
 // Database URL
-let dbUrl = '';
-if(Object.prototype.hasOwnProperty.call(localSettings, 'dbUrl')) {
-    dbUrl = localSettings.dbUrl;
-} else {
-    dbUrl = process.env.DBURL;
-}
+const dbUrl = process.env.DB_URL;
 
 // Database User
-let dbUser = '';
-if(Object.prototype.hasOwnProperty.call(localSettings, 'dbUser')) {
-    dbUser = localSettings.dbUser;
-} else {
-    dbUser = process.env.DBUSER;
-}
+const dbUser = process.env.DB_USER;
 
-// Database pwd
-let dbPwd = '';
-if(Object.prototype.hasOwnProperty.call(localSettings, 'dbPwd')) {
-    dbPwd = localSettings.dbPwd;
-} else {
-    dbPwd = process.env.DBPWD;
-}
+// Database User
+const dbPwd = process.env.DB_PWD;
 
 // Database connection
 const dbConnection = `mongodb+srv://${dbUser}:${dbPwd}@${dbUrl}`;

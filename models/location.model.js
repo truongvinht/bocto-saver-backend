@@ -18,7 +18,8 @@ module.exports = mongoose => {
       object.id = _id;
       return object;
     });
-  
+    // const myDB = mongoose.connection.useDb('bocto-saver');
+
     return mongoose.model("location", schema);
   };
   
